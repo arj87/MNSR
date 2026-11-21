@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="100%" height="100%" style="background:#0c0d11; font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
+  <defs>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="ar-def" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="32" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700" letter-spacing="1">FIGURE 4.5: FINANCIAL CONTAGION CASCADE &amp; DEBTRANK CENTRALITY</text>
+  <text x="600" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">Recursive Balance-Sheet Distress Propagation (Yes_Bank Default) &amp; S-IFI Centrality Ranking</text>
+
+  <g transform="translate(20, 65)" filter="url(#card-shadow)">
+    <!-- Header -->
+    <rect width="1160" height="42" rx="6" fill="#121419" stroke="#222631" stroke-width="1"/>
+    <text x="24" y="26" fill="#f8fafc" font-size="13" font-weight="700" font-family="'JetBrains Mono', monospace" letter-spacing="1">MNSR ENGINE</text>
+    <circle cx="1060" cy="21" r="4" fill="#10b981"/>
+    <text x="1072" y="25" fill="#94a3b8" font-size="10" font-family="monospace">CONNECTED</text>
+
+    <!-- Navigation Bar -->
+    <rect y="42" width="1160" height="36" fill="#121419" stroke="#222631" stroke-width="1"/>
+    <text x="85" y="64" text-anchor="middle" fill="#64748b" font-size="11">Network Topology</text>
+    <text x="225" y="64" text-anchor="middle" fill="#64748b" font-size="11">Multilateral Netting</text>
+    <text x="365" y="64" text-anchor="middle" fill="#64748b" font-size="11">Settlement &amp; Gridlock</text>
+    <text x="495" y="64" text-anchor="middle" fill="#64748b" font-size="11">Liquidity &amp; Flow</text>
+    <!-- Active Tab: Crisis Simulator -->
+    <rect x="560" y="42" width="140" height="36" fill="rgba(225,29,72,0.08)"/>
+    <line x1="560" y1="77" x2="700" y2="77" stroke="#e11d48" stroke-width="2"/>
+    <text x="630" y="64" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="600">Crisis Simulator</text>
+    <text x="750" y="64" text-anchor="middle" fill="#64748b" font-size="11">Regulator Toolkit</text>
+
+    <!-- Canvas -->
+    <rect y="78" width="820" height="600" fill="#0c0d11"/>
+
+    <!-- Contagion Shock Wave Lines (Red) -->
+    <path d="M 220 540 A 400 400 0 0 1 120 380" fill="none" stroke="#e11d48" stroke-width="3.5" marker-end="url(#ar-def)"/>
+    <path d="M 220 540 A 400 400 0 0 1 450 540" fill="none" stroke="#e11d48" stroke-width="3" marker-end="url(#ar-def)"/>
+    <path d="M 450 540 A 400 400 0 0 1 640 260" fill="none" stroke="#e11d48" stroke-width="3" marker-end="url(#ar-def)"/>
+    <path d="M 120 380 A 400 400 0 0 1 300 420" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4,4"/>
+
+    <!-- DEFAULTED NODES (Dark Red with Crimson Ring) -->
+    <!-- Node 1: Initial Defaulter Yes_Bank -->
+    <g transform="translate(220, 540)">
+      <circle r="42" fill="none" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.8"/>
+      <circle r="34" fill="#450a0a" stroke="#e11d48" stroke-width="4"/>
+      <text y="-2" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="700">YES BANK</text>
+      <rect x="-35" y="10" width="70" height="15" rx="3" fill="#e11d48"/>
+      <text y="21" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="700">INSOLVENT</text>
+      <text y="54" text-anchor="middle" fill="#e11d48" font-size="10" font-weight="600">[Round 0 Default]</text>
+    </g>
+
+    <!-- Node 2: Secondary Defaulter Canara -->
+    <g transform="translate(120, 380)">
+      <circle r="32" fill="#450a0a" stroke="#e11d48" stroke-width="3.5"/>
+      <text y="-2" text-anchor="middle" fill="#fca5a5" font-size="10.5" font-weight="700">Canara</text>
+      <rect x="-30" y="8" width="60" height="14" rx="3" fill="#e11d48"/>
+      <text y="18" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="700">COLLAPSED</text>
+      <text y="48" text-anchor="middle" fill="#e11d48" font-size="9.5">[Round 1 Wave]</text>
+    </g>
+
+    <!-- Node 3: Secondary Defaulter Axis -->
+    <g transform="translate(640, 260)">
+      <circle r="32" fill="#450a0a" stroke="#e11d48" stroke-width="3.5"/>
+      <text y="-2" text-anchor="middle" fill="#fca5a5" font-size="10.5" font-weight="700">Axis</text>
+      <rect x="-30" y="8" width="60" height="14" rx="3" fill="#e11d48"/>
+      <text y="18" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="700">COLLAPSED</text>
+      <text y="48" text-anchor="middle" fill="#e11d48" font-size="9.5">[Round 1 Wave]</text>
+    </g>
+
+    <!-- Node 4: Distressed Node (PNB - Capital Absorbing Losses) -->
+    <g transform="translate(450, 540)">
+      <circle r="29" fill="#3b2304" stroke="#d97706" stroke-width="3"/>
+      <text y="3" text-anchor="middle" fill="#fcd34d" font-size="10.5" font-weight="700">PNB</text>
+      <text y="45" text-anchor="middle" fill="#d97706" font-size="9.5">[Buffer Depleted]</text>
+    </g>
+
+    <!-- Solvent Resilient Banks (SBI & HDFC) -->
+    <g transform="translate(240, 220)"><circle r="32" fill="#14161c" stroke="#28549C" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">SBI</text><text y="48" text-anchor="middle" fill="#10b981" font-size="9.5">Solvent</text></g>
+    <g transform="translate(480, 180)"><circle r="30" fill="#14161c" stroke="#004C8F" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">HDFC</text><text y="46" text-anchor="middle" fill="#10b981" font-size="9.5">Solvent</text></g>
+    <g transform="translate(300, 420)"><circle r="29" fill="#14161c" stroke="#F58220" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">ICICI</text><text y="45" text-anchor="middle" fill="#10b981" font-size="9.5">Solvent</text></g>
+    <g transform="translate(600, 460)"><circle r="28" fill="#14161c" stroke="#ED1C24" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">Kotak</text><text y="44" text-anchor="middle" fill="#10b981" font-size="9.5">Solvent</text></g>
+
+    <!-- ================= RIGHT SIDEBAR ================= -->
+    <g transform="translate(820, 78)">
+      <rect width="340" height="600" fill="#121419" stroke="#222631" stroke-width="1"/>
+
+      <!-- Default Trigger Box -->
+      <g transform="translate(16, 16)">
+        <rect width="308" height="90" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">DEFAULT INITIATION</text>
+        <text x="14" y="38" fill="#94a3b8" font-size="9.5">TRIGGER INSOLVENT INSTITUTION</text>
+        <rect x="14" y="44" width="280" height="24" rx="3" fill="#111317" stroke="#e11d48"/>
+        <text x="24" y="60" fill="#fca5a5" font-size="10">Yes_Bank (Capital: ₹50 Cr)</text>
+      </g>
+
+      <!-- Cascade Alert Box -->
+      <g transform="translate(16, 116)">
+        <rect width="308" height="42" rx="4" fill="rgba(225,29,72,0.12)" stroke="#e11d48"/>
+        <text x="154" y="25" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="700">CASCADE FINISHED: 4 OF 8 INSTITUTIONS COLLAPSED</text>
+      </g>
+
+      <!-- DebtRank Leaderboard -->
+      <g transform="translate(16, 170)">
+        <rect width="308" height="270" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">DEBTRANK SYSTEMIC CENTRALITY</text>
+
+        <!-- Rank 1: SBI -->
+        <g transform="translate(14, 32)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#1</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">State Bank of India (SBI)</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">1.000</text>
+        </g>
+
+        <!-- Rank 2: HDFC -->
+        <g transform="translate(14, 70)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#2</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">HDFC Bank</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="53" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">0.884</text>
+        </g>
+
+        <!-- Rank 3: ICICI -->
+        <g transform="translate(14, 108)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#3</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">ICICI Bank</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="44" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">0.742</text>
+        </g>
+
+        <!-- Rank 4: Axis -->
+        <g transform="translate(14, 146)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#4</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">Axis Bank</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="37" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">0.615</text>
+        </g>
+
+        <!-- Rank 5: Kotak -->
+        <g transform="translate(14, 184)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#5</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">Kotak Mahindra</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="29" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">0.490</text>
+        </g>
+
+        <!-- Rank 6: PNB -->
+        <g transform="translate(14, 222)">
+          <rect width="280" height="34" rx="4" fill="#111317" stroke="#222631"/>
+          <text x="14" y="21" fill="#64748b" font-size="10" font-family="monospace">#6</text>
+          <text x="36" y="21" fill="#f8fafc" font-size="11" font-weight="600">Punjab National</text>
+          <rect x="175" y="14" width="60" height="6" rx="3" fill="#2d3442"/>
+          <rect x="175" y="14" width="23" height="6" rx="3" fill="#d97706"/>
+          <text x="245" y="21" fill="#d97706" font-size="10" font-weight="700" font-family="monospace">0.380</text>
+        </g>
+      </g>
+
+      <!-- Cascade Step Log -->
+      <g transform="translate(16, 450)">
+        <rect width="308" height="120" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">CASCADE ROUND TRACE</text>
+        <rect x="14" y="30" width="280" height="78" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="22" y="48" fill="#fca5a5" font-size="9" font-family="monospace">[DEFAULT] Round 0: Yes_Bank defaulted (insolvency)</text>
+        <text x="22" y="64" fill="#fde047" font-size="9" font-family="monospace">[LOSS] Axis absorbed ₹400Cr (Remaining: ₹0Cr)</text>
+        <text x="22" y="80" fill="#fca5a5" font-size="9" font-family="monospace">[DEFAULT] Round 1: Axis &amp; Canara collapsed</text>
+        <text x="22" y="96" fill="#fde047" font-size="9" font-family="monospace">[LOSS] PNB buffer depleted by Round 2 shock</text>
+      </g>
+    </g>
+  </g>
+</svg>

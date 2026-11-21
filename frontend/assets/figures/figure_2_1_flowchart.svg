@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 820" width="100%" height="100%" style="background:#0f1117; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <defs>
+    <!-- Arrowhead Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <!-- Filter for subtle drop shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Title Block -->
+  <text x="500" y="38" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700" letter-spacing="1">FIGURE 2.1: SYSTEM EXECUTION PIPELINE FLOWCHART</text>
+  <text x="500" y="60" text-anchor="middle" fill="#94a3b8" font-size="12">Multilateral Netting, Settlement Sequencing, Liquidity Optimization &amp; Contagion Architecture</text>
+
+  <!-- ================= ROW 1: INPUT ================= -->
+  <g transform="translate(330, 85)" filter="url(#shadow)">
+    <rect width="340" height="54" rx="8" fill="#181a24" stroke="#38bdf8" stroke-width="2"/>
+    <text x="170" y="24" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="0.8">1. SYSTEM INPUT: INTERBANK OBLIGATION DATA</text>
+    <text x="170" y="42" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Banks (Capital &amp; Liquidity Buffers) + Claims w(u, v)</text>
+  </g>
+
+  <!-- Line Input -> Core -->
+  <line x1="500" y1="139" x2="500" y2="167" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ================= ROW 2: GRAPH CORE ================= -->
+  <g transform="translate(320, 167)" filter="url(#shadow)">
+    <rect width="360" height="54" rx="8" fill="#1e2230" stroke="#475569" stroke-width="1.5"/>
+    <text x="180" y="24" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="600">MODULE 1: GRAPH CORE &amp; REPRESENTATION</text>
+    <text x="180" y="42" text-anchor="middle" fill="#94a3b8" font-size="11">Adjacency List &amp; Matrix Construction | BFS &amp; DFS Traversal</text>
+  </g>
+
+  <!-- Split Lines from Core to Engine Branches -->
+  <path d="M 500 221 L 500 245 L 200 245 L 200 270" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 500 221 L 500 270" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 500 221 L 500 245 L 800 245 L 800 270" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ================= COLUMN 1: NETTING & SETTLEMENT ================= -->
+  <!-- Decision Diamond: Cycle Detection -->
+  <g transform="translate(200, 310)" filter="url(#shadow)">
+    <polygon points="0,-35 85,0 0,35 -85,0" fill="#181a24" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#f59e0b" font-size="10.5" font-weight="700">DFS Cycle?</text>
+    <text x="0" y="10" text-anchor="middle" fill="#cbd5e1" font-size="10">C = (u1...uk, u1)</text>
+  </g>
+
+  <!-- Netting Loop: Yes Branch -->
+  <path d="M 115 310 L 60 310 L 60 395 L 110 395" fill="none" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-amber)"/>
+  <text x="75" y="302" fill="#f59e0b" font-size="10" font-weight="700">YES</text>
+
+  <!-- Cycle Reduction Box -->
+  <g transform="translate(110, 370)" filter="url(#shadow)">
+    <rect width="180" height="52" rx="6" fill="#1e2230" stroke="#f59e0b" stroke-width="1.2"/>
+    <text x="90" y="20" text-anchor="middle" fill="#f59e0b" font-size="10.5" font-weight="600">CYCLE CANCELLATION</text>
+    <text x="90" y="34" text-anchor="middle" fill="#cbd5e1" font-size="10">delta = min w(e) on cycle</text>
+    <text x="90" y="46" text-anchor="middle" fill="#94a3b8" font-size="9">w'(e) = w(e) - delta</text>
+  </g>
+
+  <!-- Invariant Check & Loop back -->
+  <path d="M 200 422 L 200 450" fill="none" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-amber)"/>
+  
+  <g transform="translate(100, 450)" filter="url(#shadow)">
+    <rect width="200" height="42" rx="6" fill="#181a24" stroke="#10b981" stroke-width="1.2"/>
+    <text x="100" y="18" text-anchor="middle" fill="#10b981" font-size="10.5" font-weight="600">INVARIANCE VERIFIED</text>
+    <text x="100" y="32" text-anchor="middle" fill="#94a3b8" font-size="9.5">Delta Net P(v) = 0 | Elim 0-weights</text>
+  </g>
+
+  <!-- Loop back to Cycle Diamond -->
+  <path d="M 100 471 L 35 471 L 35 310 L 110 310" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrow-amber)"/>
+
+  <!-- Netting Complete: No Branch (DAG) -->
+  <path d="M 200 345 L 200 348 L 290 348 L 290 520 L 200 520" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#arrow-green)"/>
+  <text x="215" y="342" fill="#10b981" font-size="10" font-weight="700">NO (DAG)</text>
+
+  <!-- Settlement Sequencing Box -->
+  <g transform="translate(95, 520)" filter="url(#shadow)">
+    <rect width="210" height="52" rx="6" fill="#181a24" stroke="#10b981" stroke-width="1.8"/>
+    <text x="105" y="20" text-anchor="middle" fill="#10b981" font-size="11" font-weight="700">MODULE 2: SETTLEMENT</text>
+    <text x="105" y="34" text-anchor="middle" fill="#f8fafc" font-size="10.5">Kahn's Topological Sort</text>
+    <text x="105" y="46" text-anchor="middle" fill="#94a3b8" font-size="9">Generates Gridlock-Free Queue</text>
+  </g>
+
+  <!-- Tarjan SCC Gridlock Detection (Dashed Side Branch) -->
+  <g transform="translate(95, 590)" filter="url(#shadow)">
+    <rect width="210" height="42" rx="6" fill="#181a24" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text x="105" y="18" text-anchor="middle" fill="#e11d48" font-size="10.5" font-weight="600">Tarjan's SCC Algorithm</text>
+    <text x="105" y="32" text-anchor="middle" fill="#94a3b8" font-size="9.5">Gridlock Detected if |SCC| &gt; 1</text>
+  </g>
+  <line x1="200" y1="572" x2="200" y2="590" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- ================= COLUMN 2: LIQUIDITY ROUTING ================= -->
+  <!-- Max Flow Edmonds-Karp -->
+  <g transform="translate(390, 270)" filter="url(#shadow)">
+    <rect width="220" height="60" rx="8" fill="#181a24" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="110" y="20" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">MODULE 3: LIQUIDITY ROUTING</text>
+    <text x="110" y="36" text-anchor="middle" fill="#f8fafc" font-size="10.5">Edmonds-Karp Max Flow</text>
+    <text x="110" y="50" text-anchor="middle" fill="#94a3b8" font-size="9.5">BFS Path Augmentation: O(V*E^2)</text>
+  </g>
+
+  <line x1="500" y1="330" x2="500" y2="365" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Min-Cut Bottlenecks -->
+  <g transform="translate(390, 365)" filter="url(#shadow)">
+    <rect width="220" height="54" rx="8" fill="#1e2230" stroke="#e11d48" stroke-width="1.5"/>
+    <text x="110" y="20" text-anchor="middle" fill="#e11d48" font-size="11" font-weight="700">MIN-CUT BOTTLENECKS</text>
+    <text x="110" y="34" text-anchor="middle" fill="#cbd5e1" font-size="10">Residual Reachability Cut (S, T)</text>
+    <text x="110" y="47" text-anchor="middle" fill="#94a3b8" font-size="9">Exposes Critical Liquidity Chokepoints</text>
+  </g>
+
+  <line x1="500" y1="419" x2="500" y2="455" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Dijkstra & Bellman-Ford -->
+  <g transform="translate(390, 455)" filter="url(#shadow)">
+    <rect width="220" height="50" rx="8" fill="#181a24" stroke="#475569" stroke-width="1.5"/>
+    <text x="110" y="20" text-anchor="middle" fill="#f8fafc" font-size="10.5" font-weight="600">OPTIMAL ROUTING</text>
+    <text x="110" y="34" text-anchor="middle" fill="#cbd5e1" font-size="9.5">Dijkstra Shortest Path</text>
+    <text x="110" y="45" text-anchor="middle" fill="#94a3b8" font-size="9">Bellman-Ford Arbitrage Detection</text>
+  </g>
+
+  <!-- ================= COLUMN 3: CONTAGION & REGULATOR ================= -->
+  <!-- Contagion Cascade -->
+  <g transform="translate(690, 270)" filter="url(#shadow)">
+    <rect width="220" height="58" rx="8" fill="#181a24" stroke="#e11d48" stroke-width="1.5"/>
+    <text x="110" y="20" text-anchor="middle" fill="#e11d48" font-size="11" font-weight="700">MODULE 4: CRISIS SIMULATOR</text>
+    <text x="110" y="36" text-anchor="middle" fill="#f8fafc" font-size="10.5">Eisenberg-Noe Default Cascade</text>
+    <text x="110" y="50" text-anchor="middle" fill="#94a3b8" font-size="9.5">Loss(v) = Sum w(u, v) &gt; Capital(v)</text>
+  </g>
+
+  <line x1="800" y1="328" x2="800" y2="365" stroke="#e11d48" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- DebtRank & Topology Weaknesses -->
+  <g transform="translate(690, 365)" filter="url(#shadow)">
+    <rect width="220" height="54" rx="8" fill="#1e2230" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="110" y="20" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">DEBTRANK CENTRALITY</text>
+    <text x="110" y="34" text-anchor="middle" fill="#cbd5e1" font-size="10">PageRank-Style Feedback: h_(t+1)</text>
+    <text x="110" y="47" text-anchor="middle" fill="#94a3b8" font-size="9">Ranks Systemically Important Banks</text>
+  </g>
+
+  <line x1="800" y1="419" x2="800" y2="455" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Structural Points of Failure -->
+  <g transform="translate(690, 455)" filter="url(#shadow)">
+    <rect width="220" height="50" rx="8" fill="#181a24" stroke="#475569" stroke-width="1.5"/>
+    <text x="110" y="18" text-anchor="middle" fill="#f8fafc" font-size="10.5" font-weight="600">STRUCTURAL VULNERABILITY</text>
+    <text x="110" y="32" text-anchor="middle" fill="#cbd5e1" font-size="9.5">Tarjan Articulation Points &amp; Bridges</text>
+    <text x="110" y="44" text-anchor="middle" fill="#94a3b8" font-size="9">Kruskal Maximum Spanning Tree (MST)</text>
+  </g>
+
+  <line x1="800" y1="505" x2="800" y2="535" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Module 5: Regulator Toolkit -->
+  <g transform="translate(690, 535)" filter="url(#shadow)">
+    <rect width="220" height="52" rx="8" fill="#1e2230" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="110" y="19" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">MODULE 5: REGULATOR TOOLKIT</text>
+    <text x="110" y="33" text-anchor="middle" fill="#cbd5e1" font-size="10">2-Approx Vertex Cover (Supervision)</text>
+    <text x="110" y="46" text-anchor="middle" fill="#94a3b8" font-size="9">Karger's Min k-Cut Clearing Groups</text>
+  </g>
+
+  <!-- ================= CONVERGENCE TO UI OUTPUT ================= -->
+  <!-- Convergence Lines to Dashboard -->
+  <path d="M 200 632 L 200 670 L 460 670 L 460 705" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <path d="M 500 505 L 500 705" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 800 587 L 800 670 L 540 670 L 540 705" fill="none" stroke="#e11d48" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Output Box: Interactive D3.js Financial Terminal -->
+  <g transform="translate(260, 710)" filter="url(#shadow)">
+    <rect width="480" height="68" rx="10" fill="#181a24" stroke="#10b981" stroke-width="2.5"/>
+    <text x="240" y="24" text-anchor="middle" fill="#10b981" font-size="13" font-weight="700" letter-spacing="1">SYSTEM OUTPUT: INTERACTIVE D3.JS DASHBOARD</text>
+    <text x="240" y="42" text-anchor="middle" fill="#f8fafc" font-size="11.5">Force-Directed Physics Graph | Authentic Bank Logos | Bidirectional Arcs</text>
+    <text x="240" y="58" text-anchor="middle" fill="#94a3b8" font-size="10.5">Real-Time Step Animation, Edge Inspection Card &amp; Net Invariance Verification</text>
+  </g>
+
+</svg>

@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 850" width="100%" height="100%" style="background:#0f1117; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="550" y="38" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700" letter-spacing="1">FIGURE 3.1: C++ LOGIC ENGINE UML CLASS DIAGRAM</text>
+  <text x="550" y="60" text-anchor="middle" fill="#94a3b8" font-size="12">Object-Oriented Architecture, Data Structures, and Algorithm Module Decoupling</text>
+
+  <!-- ================= ROW 1: ENTITIES ================= -->
+  <!-- Node Struct -->
+  <g transform="translate(140, 85)" filter="url(#shadow)">
+    <rect width="240" height="135" rx="6" fill="#181a24" stroke="#475569" stroke-width="1.5"/>
+    <rect width="240" height="28" rx="6" fill="#1e2230"/>
+    <text x="120" y="19" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">&lt;&lt;struct&gt;&gt; Node</text>
+    <line x1="0" y1="28" x2="240" y2="28" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="48" fill="#e2e8f0" font-size="11">+ id: std::string</text>
+    <text x="12" y="66" fill="#e2e8f0" font-size="11">+ capital: double</text>
+    <text x="12" y="84" fill="#e2e8f0" font-size="11">+ liquidity: double</text>
+    <text x="12" y="102" fill="#e2e8f0" font-size="11">+ defaulted: bool</text>
+    <text x="12" y="120" fill="#e2e8f0" font-size="11">+ debtRank: double</text>
+  </g>
+
+  <!-- Edge Struct -->
+  <g transform="translate(430, 85)" filter="url(#shadow)">
+    <rect width="240" height="110" rx="6" fill="#181a24" stroke="#475569" stroke-width="1.5"/>
+    <rect width="240" height="28" rx="6" fill="#1e2230"/>
+    <text x="120" y="19" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">&lt;&lt;struct&gt;&gt; Edge</text>
+    <line x1="0" y1="28" x2="240" y2="28" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="50" fill="#e2e8f0" font-size="11">+ from: std::string</text>
+    <text x="12" y="70" fill="#e2e8f0" font-size="11">+ to: std::string</text>
+    <text x="12" y="90" fill="#e2e8f0" font-size="11">+ weight: double</text>
+  </g>
+
+  <!-- Result Structs Helper -->
+  <g transform="translate(720, 85)" filter="url(#shadow)">
+    <rect width="240" height="110" rx="6" fill="#181a24" stroke="#475569" stroke-width="1.5"/>
+    <rect width="240" height="28" rx="6" fill="#1e2230"/>
+    <text x="120" y="19" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">&lt;&lt;types&gt;&gt; Engine DTOs</text>
+    <line x1="0" y1="28" x2="240" y2="28" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="48" fill="#cbd5e1" font-size="10.5">• NettingResult &amp; NettingStep</text>
+    <text x="12" y="66" fill="#cbd5e1" font-size="10.5">• TopoResult &amp; SCCResult</text>
+    <text x="12" y="84" fill="#cbd5e1" font-size="10.5">• MaxFlowResult &amp; MinCutResult</text>
+    <text x="12" y="102" fill="#cbd5e1" font-size="10.5">• CascadeResult &amp; DebtRankResult</text>
+  </g>
+
+  <!-- ================= ROW 2: CORE GRAPH CLASS ================= -->
+  <g transform="translate(300, 240)" filter="url(#shadow)">
+    <rect width="500" height="210" rx="8" fill="#141722" stroke="#38bdf8" stroke-width="2"/>
+    <rect width="500" height="32" rx="8" fill="#1e2230"/>
+    <text x="250" y="22" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700">class Graph</text>
+    <line x1="0" y1="32" x2="500" y2="32" stroke="#38bdf8" stroke-width="1"/>
+    <!-- Attributes -->
+    <text x="16" y="52" fill="#e2e8f0" font-size="11">+ adjList: std::map&lt;std::string, std::map&lt;std::string, double&gt;&gt;</text>
+    <text x="16" y="70" fill="#e2e8f0" font-size="11">+ nodes: std::map&lt;std::string, Node&gt;</text>
+    <line x1="0" y1="80" x2="500" y2="80" stroke="#2d3442" stroke-width="1"/>
+    <!-- Methods -->
+    <text x="16" y="100" fill="#cbd5e1" font-size="10.5">+ addNode(Node): void | addEdge(from, to, weight): void</text>
+    <text x="16" y="118" fill="#cbd5e1" font-size="10.5">+ removeEdge(from, to): void | edgeWeight(from, to): double</text>
+    <text x="16" y="136" fill="#cbd5e1" font-size="10.5">+ getNodeIds(): std::vector&lt;string&gt; | getEdges(): std::vector&lt;Edge&gt;</text>
+    <text x="16" y="154" fill="#cbd5e1" font-size="10.5">+ totalEdgeWeight(): double | computeNetPositions(): std::map&lt;string, double&gt;</text>
+    <text x="16" y="172" fill="#cbd5e1" font-size="10.5">+ bfs(source): BFSResult | dfs(source): DFSResult</text>
+    <text x="16" y="190" fill="#cbd5e1" font-size="10.5">+ isWeaklyConnected(): bool | isStronglyConnected(): bool</text>
+    <text x="16" y="202" fill="#cbd5e1" font-size="10.5">+ generateCorePeriphery(n) | generateScaleFree(n) | generateRandom(n)</text>
+  </g>
+
+  <!-- Association lines from Entities to Graph -->
+  <line x1="260" y1="220" x2="350" y2="240" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <line x1="550" y1="195" x2="550" y2="240" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- ================= ROW 3: DECOUPLED MODULE CLASSES ================= -->
+  <!-- Netting Module -->
+  <g transform="translate(40, 500)" filter="url(#shadow)">
+    <rect width="180" height="200" rx="6" fill="#181a24" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect width="180" height="28" rx="6" fill="#1e2230"/>
+    <text x="90" y="19" text-anchor="middle" fill="#f59e0b" font-size="11.5" font-weight="700">class Netting</text>
+    <line x1="0" y1="28" x2="180" y2="28" stroke="#f59e0b" stroke-width="1"/>
+    <text x="8" y="46" fill="#94a3b8" font-size="10">- graph: Graph&amp;</text>
+    <line x1="0" y1="55" x2="180" y2="55" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="74" fill="#cbd5e1" font-size="9.5">+ findAllCycles()</text>
+    <text x="8" y="92" fill="#cbd5e1" font-size="9.5">+ cancelCycle(C, steps)</text>
+    <text x="8" y="110" fill="#cbd5e1" font-size="9.5">+ runMultilateralNetting()</text>
+    <text x="8" y="128" fill="#cbd5e1" font-size="9.5">+ runBilateralNetting()</text>
+    <text x="8" y="146" fill="#cbd5e1" font-size="9.5">+ computeNetPositions()</text>
+    <line x1="0" y1="156" x2="180" y2="156" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="174" fill="#94a3b8" font-size="9">- findCycleDFS()</text>
+    <text x="8" y="190" fill="#94a3b8" font-size="9">- findAllCyclesHelper()</text>
+  </g>
+
+  <!-- Settlement Module -->
+  <g transform="translate(245, 500)" filter="url(#shadow)">
+    <rect width="180" height="200" rx="6" fill="#181a24" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="180" height="28" rx="6" fill="#1e2230"/>
+    <text x="90" y="19" text-anchor="middle" fill="#10b981" font-size="11.5" font-weight="700">class Settlement</text>
+    <line x1="0" y1="28" x2="180" y2="28" stroke="#10b981" stroke-width="1"/>
+    <text x="8" y="46" fill="#94a3b8" font-size="10">- graph: const Graph&amp;</text>
+    <line x1="0" y1="55" x2="180" y2="55" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="74" fill="#cbd5e1" font-size="9.5">+ topologicalSort()</text>
+    <text x="8" y="92" fill="#cbd5e1" font-size="9.5">+ findSCC()</text>
+    <line x1="0" y1="105" x2="180" y2="105" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="125" fill="#94a3b8" font-size="9">- disc, low: map</text>
+    <text x="8" y="142" fill="#94a3b8" font-size="9">- onStack: map</text>
+    <text x="8" y="159" fill="#94a3b8" font-size="9">- stack: vector</text>
+    <text x="8" y="176" fill="#94a3b8" font-size="9">- tarjanDFS(u): void</text>
+  </g>
+
+  <!-- Liquidity Module -->
+  <g transform="translate(450, 500)" filter="url(#shadow)">
+    <rect width="180" height="200" rx="6" fill="#181a24" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect width="180" height="28" rx="6" fill="#1e2230"/>
+    <text x="90" y="19" text-anchor="middle" fill="#38bdf8" font-size="11.5" font-weight="700">class Liquidity</text>
+    <line x1="0" y1="28" x2="180" y2="28" stroke="#38bdf8" stroke-width="1"/>
+    <text x="8" y="46" fill="#94a3b8" font-size="10">- graph: const Graph&amp;</text>
+    <line x1="0" y1="55" x2="180" y2="55" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="74" fill="#cbd5e1" font-size="9.5">+ maxFlow(src, sink)</text>
+    <text x="8" y="92" fill="#cbd5e1" font-size="9.5">+ minCut(src, sink)</text>
+    <text x="8" y="110" fill="#cbd5e1" font-size="9.5">+ dijkstra(src)</text>
+    <text x="8" y="128" fill="#cbd5e1" font-size="9.5">+ bellmanFord(src)</text>
+    <line x1="0" y1="140" x2="180" y2="140" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="160" fill="#94a3b8" font-size="9">- bfsResidual()</text>
+    <text x="8" y="178" fill="#94a3b8" font-size="9">- residual: capacity map</text>
+  </g>
+
+  <!-- Contagion Module -->
+  <g transform="translate(655, 500)" filter="url(#shadow)">
+    <rect width="190" height="230" rx="6" fill="#181a24" stroke="#e11d48" stroke-width="1.5"/>
+    <rect width="190" height="28" rx="6" fill="#1e2230"/>
+    <text x="95" y="19" text-anchor="middle" fill="#e11d48" font-size="11.5" font-weight="700">class Contagion</text>
+    <line x1="0" y1="28" x2="190" y2="28" stroke="#e11d48" stroke-width="1"/>
+    <text x="8" y="46" fill="#94a3b8" font-size="10">- graph: Graph&amp;</text>
+    <line x1="0" y1="55" x2="190" y2="55" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="74" fill="#cbd5e1" font-size="9.5">+ simulateCascade()</text>
+    <text x="8" y="92" fill="#cbd5e1" font-size="9.5">+ computeDebtRank()</text>
+    <text x="8" y="110" fill="#cbd5e1" font-size="9.5">+ findArticulationPoints()</text>
+    <text x="8" y="128" fill="#cbd5e1" font-size="9.5">+ findBridges()</text>
+    <text x="8" y="146" fill="#cbd5e1" font-size="9.5">+ maxSpanningTree()</text>
+    <line x1="0" y1="156" x2="190" y2="156" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="174" fill="#94a3b8" font-size="9">- apDFS(u, visited)</text>
+    <text x="8" y="191" fill="#94a3b8" font-size="9">- ufFind(), ufUnion()</text>
+    <text x="8" y="208" fill="#94a3b8" font-size="9">- uf_parent, uf_rank: map</text>
+  </g>
+
+  <!-- Regulator Module -->
+  <g transform="translate(870, 500)" filter="url(#shadow)">
+    <rect width="190" height="200" rx="6" fill="#181a24" stroke="#a855f7" stroke-width="1.5"/>
+    <rect width="190" height="28" rx="6" fill="#1e2230"/>
+    <text x="95" y="19" text-anchor="middle" fill="#a855f7" font-size="11.5" font-weight="700">class Regulator</text>
+    <line x1="0" y1="28" x2="190" y2="28" stroke="#a855f7" stroke-width="1"/>
+    <text x="8" y="46" fill="#94a3b8" font-size="10">- graph: const Graph&amp;</text>
+    <line x1="0" y1="55" x2="190" y2="55" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="74" fill="#cbd5e1" font-size="9.5">+ vertexCover2Approx()</text>
+    <text x="8" y="92" fill="#cbd5e1" font-size="9.5">+ minKCut(int k)</text>
+    <line x1="0" y1="105" x2="190" y2="105" stroke="#2d3442" stroke-width="1"/>
+    <text x="8" y="125" fill="#94a3b8" font-size="9">- buildKargerGraph()</text>
+    <text x="8" y="142" fill="#94a3b8" font-size="9">- contractEdge(idx)</text>
+    <text x="8" y="159" fill="#94a3b8" font-size="9">- kargerMinCut()</text>
+    <text x="8" y="176" fill="#94a3b8" font-size="9">- KargerGraph: struct</text>
+  </g>
+
+  <!-- Dependency/Association Lines from Modules to Graph -->
+  <path d="M 130 500 L 130 470 L 350 470 L 350 450" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#assoc)"/>
+  <path d="M 335 500 L 335 450" fill="none" stroke="#10b981" stroke-width="1.5" marker-end="url(#assoc)"/>
+  <path d="M 540 500 L 540 450" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#assoc)"/>
+  <path d="M 750 500 L 750 470 L 680 470 L 680 450" fill="none" stroke="#e11d48" stroke-width="1.5" marker-end="url(#assoc)"/>
+  <path d="M 965 500 L 965 480 L 770 480 L 770 450" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#assoc)"/>
+
+  <!-- Footer Caption -->
+  <text x="550" y="790" text-anchor="middle" fill="#64748b" font-size="11">C++17 Engine Modules maintain reference to core Graph entity, enabling clean algorithmic decomposition and zero state duplication.</text>
+</svg>

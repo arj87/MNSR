@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="100%" height="100%" style="background:#0c0d11; font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
+  <defs>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="ar-def" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="ar-active" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="32" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700" letter-spacing="1">FIGURE 4.2: MULTILATERAL NETTING &amp; INVARIANT DEBT COMPRESSION</text>
+  <text x="600" y="50" text-anchor="middle" fill="#94a3b8" font-size="11">Cycle Elimination (69.28% Gross Volume Reduction) &amp; Formal Net Balance Invariance Audit Table</text>
+
+  <g transform="translate(20, 65)" filter="url(#card-shadow)">
+    <!-- Header -->
+    <rect width="1160" height="42" rx="6" fill="#121419" stroke="#222631" stroke-width="1"/>
+    <text x="24" y="26" fill="#f8fafc" font-size="13" font-weight="700" font-family="'JetBrains Mono', monospace" letter-spacing="1">MNSR ENGINE</text>
+    <circle cx="1060" cy="21" r="4" fill="#10b981"/>
+    <text x="1072" y="25" fill="#94a3b8" font-size="10" font-family="monospace">CONNECTED</text>
+
+    <!-- Navigation Bar -->
+    <rect y="42" width="1160" height="36" fill="#121419" stroke="#222631" stroke-width="1"/>
+    <text x="85" y="64" text-anchor="middle" fill="#64748b" font-size="11">Network Topology</text>
+    <!-- Active Tab: Netting -->
+    <rect x="155" y="42" width="140" height="36" fill="rgba(56,189,248,0.06)"/>
+    <line x1="155" y1="77" x2="295" y2="77" stroke="#38bdf8" stroke-width="2"/>
+    <text x="225" y="64" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">Multilateral Netting</text>
+    <text x="360" y="64" text-anchor="middle" fill="#64748b" font-size="11">Settlement &amp; Gridlock</text>
+    <text x="490" y="64" text-anchor="middle" fill="#64748b" font-size="11">Liquidity &amp; Flow</text>
+    <text x="610" y="64" text-anchor="middle" fill="#64748b" font-size="11">Crisis Simulator</text>
+    <text x="730" y="64" text-anchor="middle" fill="#64748b" font-size="11">Regulator Toolkit</text>
+
+    <!-- Canvas (Netting Result) -->
+    <rect y="78" width="820" height="600" fill="#0c0d11"/>
+
+    <!-- Netted DAG Edges (Remaining after cycle cancellation) -->
+    <!-- SBI -> HDFC (Reduced from 800 to 500) -->
+    <path d="M 240 220 A 400 400 0 0 1 480 180" fill="none" stroke="#38bdf8" stroke-width="2.8" marker-end="url(#ar-active)"/>
+    <rect x="335" y="172" width="55" height="18" rx="4" fill="#111317" stroke="#38bdf8"/>
+    <text x="362" y="185" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">₹500Cr</text>
+
+    <!-- HDFC -> Axis (Reduced from 400 to 220) -->
+    <path d="M 480 180 A 400 400 0 0 1 650 260" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ar-active)"/>
+    <rect x="545" y="195" width="55" height="18" rx="4" fill="#111317" stroke="#38bdf8"/>
+    <text x="572" y="208" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">₹220Cr</text>
+
+    <!-- Cancelled Edge (Dashed & Faded Out) -->
+    <path d="M 320 420 A 400 400 0 0 1 240 220" fill="none" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.25"/>
+    <rect x="295" y="325" width="60" height="16" rx="4" fill="#181a21" stroke="#e11d48" opacity="0.3"/>
+    <text x="325" y="337" text-anchor="middle" fill="#e11d48" font-size="8.5" font-family="monospace" opacity="0.4">CLEARED</text>
+
+    <!-- Other Netted DAG Links -->
+    <path d="M 650 260 A 400 400 0 0 1 600 460" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#ar-active)"/>
+    <path d="M 320 420 A 400 400 0 0 1 450 560" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#ar-active)"/>
+    <path d="M 450 560 A 400 400 0 0 1 200 560" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#ar-active)"/>
+
+    <!-- Nodes with Bank Logos -->
+    <g transform="translate(240, 220)"><circle r="30" fill="#14161c" stroke="#28549C" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">SBI</text></g>
+    <g transform="translate(480, 180)"><circle r="29" fill="#14161c" stroke="#004C8F" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">HDFC</text></g>
+    <g transform="translate(320, 420)"><circle r="28" fill="#14161c" stroke="#F58220" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">ICICI</text></g>
+    <g transform="translate(650, 260)"><circle r="27" fill="#14161c" stroke="#97144D" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">Axis</text></g>
+    <g transform="translate(600, 460)"><circle r="26" fill="#14161c" stroke="#ED1C24" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">Kotak</text></g>
+    <g transform="translate(450, 560)"><circle r="26" fill="#14161c" stroke="#A20034" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">PNB</text></g>
+    <g transform="translate(200, 560)"><circle r="25" fill="#14161c" stroke="#005CA9" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">YES</text></g>
+    <g transform="translate(120, 380)"><circle r="25" fill="#14161c" stroke="#0091DF" stroke-width="3"/><text y="4" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="700">CAN</text></g>
+
+    <!-- ================= RIGHT SIDEBAR ================= -->
+    <g transform="translate(820, 78)">
+      <rect width="340" height="600" fill="#121419" stroke="#222631" stroke-width="1"/>
+
+      <!-- Performance Metrics Cards -->
+      <g transform="translate(16, 16)">
+        <rect width="308" height="135" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">COMPRESSION PERFORMANCE</text>
+
+        <!-- Stat: Before vs After -->
+        <rect x="14" y="32" width="135" height="42" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="24" y="47" fill="#64748b" font-size="9">GROSS VOL (BEFORE)</text>
+        <text x="24" y="65" fill="#f8fafc" font-size="13" font-weight="700" font-family="monospace">₹8,400 Cr</text>
+
+        <rect x="159" y="32" width="135" height="42" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="169" y="47" fill="#64748b" font-size="9">GROSS VOL (AFTER)</text>
+        <text x="169" y="65" fill="#10b981" font-size="13" font-weight="700" font-family="monospace">₹2,580 Cr</text>
+
+        <!-- Stat: Savings & Cycles -->
+        <rect x="14" y="80" width="135" height="42" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="24" y="95" fill="#64748b" font-size="9">LIQUIDITY SAVINGS</text>
+        <text x="24" y="113" fill="#38bdf8" font-size="14" font-weight="700" font-family="monospace">69.28%</text>
+
+        <rect x="159" y="80" width="135" height="42" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="169" y="95" fill="#64748b" font-size="9">CYCLES CANCELLED</text>
+        <text x="169" y="113" fill="#d97706" font-size="14" font-weight="700" font-family="monospace">4 Cleared</text>
+      </g>
+
+      <!-- Event Sequence Log -->
+      <g transform="translate(16, 162)">
+        <rect width="308" height="150" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">ALGORITHM EVENT TRACE</text>
+
+        <rect x="14" y="30" width="280" height="108" rx="4" fill="#111317" stroke="#222631"/>
+        <text x="22" y="48" fill="#fca5a5" font-size="9.5" font-family="monospace">[CYCLE] SBI → HDFC → ICICI → SBI (₹300Cr)</text>
+        <text x="22" y="66" fill="#fde047" font-size="9.5" font-family="monospace">[REDUCE] SBI → HDFC (-₹300Cr → ₹500Cr)</text>
+        <text x="22" y="84" fill="#64748b" font-size="9.5" font-family="monospace">[CLEARED] ICICI → SBI debt loop eliminated</text>
+        <text x="22" y="102" fill="#fca5a5" font-size="9.5" font-family="monospace">[CYCLE] HDFC → Kotak → SBI → HDFC (₹180Cr)</text>
+        <text x="22" y="120" fill="#86efac" font-size="9.5" font-family="monospace">[COMPLETE] Graph transformed into strict DAG</text>
+      </g>
+
+      <!-- Net Invariance Audit Table -->
+      <g transform="translate(16, 324)">
+        <rect width="308" height="250" rx="6" fill="#181a21" stroke="#222631"/>
+        <text x="14" y="20" fill="#64748b" font-size="10" font-weight="700" font-family="monospace">NET INVARIANCE AUDIT (DELTA P = 0)</text>
+
+        <!-- Table Header -->
+        <rect x="14" y="30" width="280" height="24" fill="#1e2230"/>
+        <text x="24" y="46" fill="#64748b" font-size="9" font-weight="700" font-family="monospace">BANK</text>
+        <text x="120" y="46" fill="#64748b" font-size="9" font-weight="700" font-family="monospace">NET BALANCE</text>
+        <text x="230" y="46" fill="#64748b" font-size="9" font-weight="700" font-family="monospace">POSITION</text>
+
+        <!-- Row 1: SBI -->
+        <text x="24" y="70" fill="#f8fafc" font-size="10" font-weight="600">SBI</text>
+        <text x="120" y="70" fill="#10b981" font-size="10" font-family="monospace">+₹120 Cr</text>
+        <rect x="220" y="58" width="68" height="16" rx="3" fill="rgba(16,185,129,0.1)"/>
+        <text x="254" y="70" text-anchor="middle" fill="#86efac" font-size="8.5" font-weight="700">CREDITOR</text>
+
+        <!-- Row 2: HDFC -->
+        <text x="24" y="94" fill="#f8fafc" font-size="10" font-weight="600">HDFC</text>
+        <text x="120" y="94" fill="#10b981" font-size="10" font-family="monospace">+₹450 Cr</text>
+        <rect x="220" y="82" width="68" height="16" rx="3" fill="rgba(16,185,129,0.1)"/>
+        <text x="254" y="94" text-anchor="middle" fill="#86efac" font-size="8.5" font-weight="700">CREDITOR</text>
+
+        <!-- Row 3: ICICI -->
+        <text x="24" y="118" fill="#f8fafc" font-size="10" font-weight="600">ICICI</text>
+        <text x="120" y="118" fill="#e11d48" font-size="10" font-family="monospace">-₹210 Cr</text>
+        <rect x="220" y="106" width="68" height="16" rx="3" fill="rgba(225,29,72,0.1)"/>
+        <text x="254" y="118" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-weight="700">DEBTOR</text>
+
+        <!-- Row 4: Axis -->
+        <text x="24" y="142" fill="#f8fafc" font-size="10" font-weight="600">Axis</text>
+        <text x="120" y="142" fill="#e11d48" font-size="10" font-family="monospace">-₹180 Cr</text>
+        <rect x="220" y="130" width="68" height="16" rx="3" fill="rgba(225,29,72,0.1)"/>
+        <text x="254" y="142" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-weight="700">DEBTOR</text>
+
+        <!-- Row 5: Kotak -->
+        <text x="24" y="166" fill="#f8fafc" font-size="10" font-weight="600">Kotak</text>
+        <text x="120" y="166" fill="#10b981" font-size="10" font-family="monospace">+₹90 Cr</text>
+        <rect x="220" y="154" width="68" height="16" rx="3" fill="rgba(16,185,129,0.1)"/>
+        <text x="254" y="166" text-anchor="middle" fill="#86efac" font-size="8.5" font-weight="700">CREDITOR</text>
+
+        <!-- Row 6: PNB -->
+        <text x="24" y="190" fill="#f8fafc" font-size="10" font-weight="600">PNB</text>
+        <text x="120" y="190" fill="#e11d48" font-size="10" font-family="monospace">-₹130 Cr</text>
+        <rect x="220" y="178" width="68" height="16" rx="3" fill="rgba(225,29,72,0.1)"/>
+        <text x="254" y="190" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-weight="700">DEBTOR</text>
+
+        <!-- Verification Badge -->
+        <rect x="14" y="212" width="280" height="24" rx="4" fill="rgba(16,185,129,0.08)" stroke="#10b981"/>
+        <text x="154" y="228" text-anchor="middle" fill="#86efac" font-size="9.5" font-weight="600">INVARIANCE VERIFIED: EXACT BALANCE CONSERVED</text>
+      </g>
+    </g>
+  </g>
+</svg>
