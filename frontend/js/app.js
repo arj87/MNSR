@@ -1,4 +1,6 @@
 // Main Application Controller for MNSR
+// Professional typography, bank entity creation, edge inspection, no emojis
+
 class MNSRApp {
   constructor() {
     this.nodes = [];
@@ -14,6 +16,7 @@ class MNSRApp {
     // 1. Initialize Visualizer
     this.viz = new window.GraphViz('#graph-area');
     this.viz.onNodeClick = (node) => this.handleNodeClick(node);
+    this.viz.onEdgeClick = (edge) => this.handleEdgeClick(edge);
 
     // 2. Setup Tabs
     this.setupTabs();
@@ -28,7 +31,7 @@ class MNSRApp {
     window.ContagionModule.init(this);
     window.RegulatorModule.init(this);
 
-    // 5. Setup Network tab controls
+    // 5. Setup Network tab controls & bank creation form
     this.setupNetworkControls();
 
     // 6. Load default scenario (Normal Market)
@@ -80,7 +83,7 @@ class MNSRApp {
 
       this.ws.onopen = () => {
         if (dot) dot.className = 'status-dot connected';
-        if (statusText) statusText.textContent = 'CONNECTED (ENGINE OK)';
+        if (statusText) statusText.textContent = 'CONNECTED';
         this.ws.send(JSON.stringify({ type: 'subscribe' }));
       };
 
@@ -88,7 +91,7 @@ class MNSRApp {
         try {
           const msg = JSON.parse(event.data);
           if (msg.type === 'steps') {
-            console.log('Live WS steps received:', msg.steps);
+            console.log('Algorithm steps received:', msg.steps);
           }
         } catch (e) {
           console.error('WS parse error', e);
@@ -97,7 +100,7 @@ class MNSRApp {
 
       this.ws.onclose = () => {
         if (dot) dot.className = 'status-dot disconnected';
-        if (statusText) statusText.textContent = 'OFFLINE (STANDBY)';
+        if (statusText) statusText.textContent = 'STANDBY';
         setTimeout(() => this.setupWebSocket(), 3000);
       };
 
@@ -120,27 +123,55 @@ class MNSRApp {
       });
     });
 
-    // Add Obligation Form
-    const form = document.getElementById('add-obligation-form');
-    if (form) {
-      form.addEventListener('submit', (e) => {
+    // Form 1: Add Obligation Form
+    const addEdgeForm = document.getElementById('add-obligation-form');
+    if (addEdgeForm) {
+      addEdgeForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const from = document.getElementById('trans-from').value;
         const to = document.getElementById('trans-to').value;
         const weight = parseFloat(document.getElementById('trans-amount').value);
 
         if (!from || !to || isNaN(weight) || weight <= 0) {
-          this.showToast('Please fill all fields with valid amounts', 'warning');
+          this.showToast('Please specify valid parameters', 'warning');
           return;
         }
         if (from === to) {
-          this.showToast('Source and destination cannot be the same bank', 'warning');
+          this.showToast('Debtor and creditor must be distinct institutions', 'warning');
           return;
         }
 
         this.addObligation(from, to, weight);
-        form.reset();
         document.getElementById('trans-amount').value = '300';
+      });
+    }
+
+    // Form 2: Add New Custom Bank Entity
+    const addBankForm = document.getElementById('add-bank-form');
+    if (addBankForm) {
+      addBankForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('new-bank-name');
+        const capInput = document.getElementById('new-bank-capital');
+        const liqInput = document.getElementById('new-bank-liquidity');
+
+        const rawName = (nameInput.value || '').trim().replace(/\s+/g, '_');
+        const capital = parseFloat(capInput.value) || 2000;
+        const liquidity = parseFloat(liqInput.value) || 1000;
+
+        if (!rawName) {
+          this.showToast('Please enter an institution name', 'warning');
+          return;
+        }
+
+        // Check duplicate
+        if (this.nodes.some(n => n.id.toLowerCase() === rawName.toLowerCase())) {
+          this.showToast(`Institution ${rawName} already exists`, 'warning');
+          return;
+        }
+
+        this.addBankEntity(rawName, capital, liquidity);
+        nameInput.value = '';
       });
     }
 
@@ -184,8 +215,24 @@ class MNSRApp {
     this.showToast(`Loaded scenario: ${name}`, 'info');
   }
 
+  addBankEntity(name, capital, liquidity) {
+    const newNode = {
+      id: name,
+      capital: capital,
+      liquidity: liquidity,
+      defaulted: false,
+      debtRank: 0
+    };
+
+    this.nodes.push(newNode);
+    this.viz.render(this.nodes, this.edges);
+    this.updateGlobalStats();
+    this.populateBankDropdowns();
+
+    this.showToast(`Created Bank: ${name} (Initials: ${window.getBankInitials(name)}, Buffer: ${window.formatINR(capital)})`, 'success');
+  }
+
   addObligation(from, to, weight) {
-    // Check if edge already exists
     const existing = this.edges.find(e => e.from === from && e.to === to);
     if (existing) {
       existing.weight += weight;
@@ -195,20 +242,22 @@ class MNSRApp {
 
     this.viz.render(this.nodes, this.edges);
     this.updateGlobalStats();
-    this.showToast(`Obligation Added: ${from} owes ${to} ${window.formatINR(weight)}`, 'success');
+    this.showToast(`Obligation added: ${from} owes ${to} ${window.formatINR(weight)}`, 'success');
 
-    // Notify modules of changes
     window.LiquidityModule.updateDropdowns();
     window.ContagionModule.updateDropdowns();
   }
 
   handleNodeClick(node) {
     if (this.currentTab === 'contagion') {
-      // Direct click-to-default in crisis tab!
       window.ContagionModule.triggerDefault(node.id);
     } else {
-      this.showToast(`Selected Bank: ${node.id} | Capital: ${window.formatINR(node.capital)}`, 'info');
+      this.showToast(`Bank: ${node.id} | Capital: ${window.formatINR(node.capital)} | Liquidity: ${window.formatINR(node.liquidity)}`, 'info');
     }
+  }
+
+  handleEdgeClick(edge) {
+    this.showToast(`Selected Obligation: ${edge.from} owes ${edge.to} ${window.formatINR(edge.weight)}`, 'info');
   }
 
   populateBankDropdowns() {
@@ -259,7 +308,7 @@ class MNSRApp {
     box.innerHTML = '';
 
     if (!steps || steps.length === 0) {
-      box.innerHTML = '<div class="step-log-entry type-info">No steps recorded.</div>';
+      box.innerHTML = '<div class="step-log-entry type-info">No algorithm steps recorded.</div>';
       return;
     }
 
@@ -270,25 +319,25 @@ class MNSRApp {
 
       if (s.type === 'cycle_found') {
         typeClass = 'type-cycle';
-        text = `🔄 Cycle Detected: ${(s.data.cycle || []).join(' → ')} (Min Flow: ₹${Math.round(s.data.min_weight)}Cr)`;
+        text = `[CYCLE] ${(s.data.cycle || []).join(' → ')} (Min Flow: ₹${Math.round(s.data.min_weight)}Cr)`;
       } else if (s.type === 'edge_reduced') {
         typeClass = 'type-reduce';
-        text = `✂️ Edge Reduced: ${s.data.from} → ${s.data.to} (-₹${Math.round(s.data.reduced_by)}Cr → ₹${Math.round(s.data.new_weight)}Cr)`;
+        text = `[REDUCE] ${s.data.from} → ${s.data.to} (-₹${Math.round(s.data.reduced_by)}Cr → ₹${Math.round(s.data.new_weight)}Cr)`;
       } else if (s.type === 'edge_removed') {
         typeClass = 'type-remove';
-        text = `❌ Debt Eliminated: ${s.data.from} → ${s.data.to} completely cancelled!`;
+        text = `[CLEARED] ${s.data.from} → ${s.data.to} debt loop eliminated`;
       } else if (s.type === 'node_settled') {
         typeClass = 'type-settle';
-        text = `✅ Order #${s.data.settled_at}: Institution ${s.data.node} fully settled`;
+        text = `[SETTLED] #${s.data.settled_at}: Institution ${s.data.node} settled`;
       } else if (s.type === 'node_defaulted') {
         typeClass = 'type-cycle';
-        text = `💥 [Round ${s.data.round || 0}] DEFAULT: ${s.data.node} failed (${s.data.reason || 'distress'})`;
+        text = `[DEFAULT] Round ${s.data.round || 0}: ${s.data.node} insolvent (${s.data.reason || 'distress'})`;
       } else if (s.type === 'loss_incurred') {
         typeClass = 'type-reduce';
-        text = `📉 Loss: ${s.data.node} absorbed ₹${Math.round(s.data.loss)}Cr (Buffer: ₹${Math.round(s.data.remainingCapital)}Cr)`;
+        text = `[LOSS] ${s.data.node} absorbed ₹${Math.round(s.data.loss)}Cr (Buffer: ₹${Math.round(s.data.remainingCapital)}Cr)`;
       } else if (s.type === 'cover_edge_picked') {
         typeClass = 'type-info';
-        text = `🛡️ Supervision Edge: ${s.data.edge_from} ↔ ${s.data.edge_to} covered`;
+        text = `[SUPERVISION] Link ${s.data.edge_from} ↔ ${s.data.edge_to} covered`;
       } else {
         text = s.data?.msg || JSON.stringify(s.data || {});
       }
@@ -320,8 +369,7 @@ class MNSRApp {
 
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
-    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
+    toast.innerHTML = `<span>${message}</span>`;
     container.appendChild(toast);
 
     setTimeout(() => {

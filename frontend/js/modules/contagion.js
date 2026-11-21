@@ -13,7 +13,7 @@ const ContagionModule = {
     this.app.nodes.forEach(n => {
       const opt = document.createElement('option');
       opt.value = n.id;
-      opt.textContent = `${n.id} (Cap: ₹${Math.round(n.capital)}Cr)`;
+      opt.textContent = `${n.id} (Buffer: ${window.formatINR(n.capital)})`;
       sel.appendChild(opt);
     });
   },
@@ -66,7 +66,7 @@ const ContagionModule = {
     if (alertBox) {
       alertBox.style.display = 'flex';
       alertBox.className = 'alert-box danger';
-      alertBox.innerHTML = `💥 <strong>Cascade Finished:</strong> ${totalDef} of ${this.app.nodes.length} institutions collapsed following ${nodeId}'s default.`;
+      alertBox.innerHTML = `<strong>CASCADE TERMINATED</strong>: ${totalDef} of ${this.app.nodes.length} institutions failed following ${nodeId}'s default.`;
     }
   },
 
@@ -104,7 +104,7 @@ const ContagionModule = {
     }
 
     this.app.logSteps('contagion-step-log', [
-      { type: 'info', data: { msg: `DebtRank completed. Most critical node: ${sorted[0]?.[0]} (Score: ${sorted[0]?.[1].toFixed(3)})` } }
+      { type: 'info', data: { msg: `DebtRank completed. Highest impact: ${sorted[0]?.[0]} (Score: ${sorted[0]?.[1].toFixed(3)})` } }
     ]);
   },
 
@@ -146,11 +146,11 @@ const ContagionModule = {
     const mstEdges = res.result.edges || [];
     this.app.viz.resetHighlight();
     mstEdges.forEach(e => {
-      this.app.viz.highlightPath([e.from, e.to], '#f59e0b');
+      this.app.viz.highlightPath([e.from, e.to], '#d97706');
     });
 
     this.app.logSteps('contagion-step-log', [
-      { type: 'info', data: { msg: `Maximum Spanning Tree covers key systemic debt: ${window.formatINR(res.result.totalWeight)} across ${mstEdges.length} links` } }
+      { type: 'info', data: { msg: `Maximum Spanning Tree covers key debt: ${window.formatINR(res.result.totalWeight)} across ${mstEdges.length} links` } }
     ]);
   }
 };

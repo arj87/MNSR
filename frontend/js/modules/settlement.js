@@ -35,7 +35,7 @@ const SettlementModule = {
     if (!res.result.success) {
       if (gridlockAlert) {
         gridlockAlert.style.display = 'flex';
-        gridlockAlert.innerHTML = `⚠️ <strong>GRIDLOCK DETECTED!</strong> Circular debt cycle prevents complete sequential settlement. Run Netting first to resolve.`;
+        gridlockAlert.innerHTML = `<strong>GRIDLOCK DETECTED</strong>: Circular debt dependencies prevent sequential settlement. Run Netting first to eliminate cycles.`;
       }
       this.app.logSteps('settlement-step-log', res.steps);
 
@@ -95,7 +95,7 @@ const SettlementModule = {
 
     this.app.viz.colorGroups(sccs);
     this.app.logSteps('settlement-step-log', [
-      { type: 'info', data: { msg: `Found ${sccs.length} components (${gridlocks.length} gridlocked cycles)` } },
+      { type: 'info', data: { msg: `Found ${sccs.length} component(s) (${gridlocks.length} gridlocked cycles)` } },
       ...res.steps
     ]);
 
@@ -103,11 +103,11 @@ const SettlementModule = {
     if (gridlockAlert) {
       if (gridlocks.length > 0) {
         gridlockAlert.style.display = 'flex';
-        gridlockAlert.innerHTML = `⚠️ Found <strong>${gridlocks.length}</strong> gridlock cluster(s): ${gridlocks.map(g => g.join(' ↔ ')).join(' | ')}`;
+        gridlockAlert.innerHTML = `Identified ${gridlocks.length} gridlock cluster(s): ${gridlocks.map(g => g.join(' ↔ ')).join(' | ')}`;
       } else {
         gridlockAlert.style.display = 'flex';
         gridlockAlert.className = 'alert-box success';
-        gridlockAlert.innerHTML = `✅ No circular gridlocks detected in the current network!`;
+        gridlockAlert.innerHTML = `Network is a DAG. No circular gridlocks detected.`;
       }
     }
   }
