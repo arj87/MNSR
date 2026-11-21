@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MNSR — Multilateral Netting & Systemic Risk Engine</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header id="header">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <div class="logo-title">MNSR · ENGINE</div>
+          <div class="logo-sub">Multilateral Netting & Systemic Risk Simulator · NPCI / UPI Core</div>
+        </div>
+      </div>
+      <div class="header-spacer"></div>
+      <div id="status-indicator">
+        <div class="status-dot connecting"></div>
+        <span id="status-text" style="font-family: var(--mono); font-size: 11px;">CONNECTING...</span>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav id="tab-bar">
+      <button class="tab-btn active" data-tab="network">
+        <span class="tab-icon">🏦</span> Network Topology
+      </button>
+      <button class="tab-btn" data-tab="netting">
+        <span class="tab-icon">🔄</span> Multilateral Netting
+      </button>
+      <button class="tab-btn" data-tab="settlement">
+        <span class="tab-icon">⏱️</span> Settlement & Gridlock
+      </button>
+      <button class="tab-btn" data-tab="liquidity">
+        <span class="tab-icon">💧</span> Liquidity & Flow
+      </button>
+      <button class="tab-btn" data-tab="contagion">
+        <span class="tab-icon">💥</span> Crisis Simulator
+      </button>
+      <button class="tab-btn" data-tab="regulator">
+        <span class="tab-icon">🛡️</span> Regulator Toolkit
+      </button>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main id="main">
+      <!-- Interactive Graph Area -->
+      <section id="graph-area">
+        <div class="graph-bg-grid"></div>
+        <!-- Spinner Overlay -->
+        <div id="graph-spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-text">Executing Algorithm on Core C++ Engine...</div>
+        </div>
+      </section>
+
+      <!-- Control & Analytical Panels -->
+      <aside id="right-panel">
+        
+        <!-- ================= TAB 1: NETWORK TOPOLOGY ================= -->
+        <div class="tab-panel active" id="panel-network">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Preset Scenarios</div>
+              <div class="scenario-btns">
+                <button class="scenario-btn active" data-scenario="normal_market">
+                  <span class="s-icon">📊</span>
+                  Normal Market
+                </button>
+                <button class="scenario-btn" data-scenario="pre_crisis">
+                  <span class="s-icon">⚠️</span>
+                  Pre-Crisis
+                </button>
+                <button class="scenario-btn danger" data-scenario="crisis_2008">
+                  <span class="s-icon">🔥</span>
+                  2008 Cascade
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Add Interbank Obligation</div>
+              <form id="add-obligation-form">
+                <div class="form-row">
+                  <label>Debtor (From Bank)</label>
+                  <select id="trans-from" required></select>
+                </div>
+                <div class="form-row">
+                  <label>Creditor (To Bank)</label>
+                  <select id="trans-to" required></select>
+                </div>
+                <div class="form-row">
+                  <label>Obligation Amount (₹ Cr)</label>
+                  <input type="number" id="trans-amount" value="300" min="10" step="10" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                  ➕ Inject Transaction Edge
+                </button>
+              </form>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Synthetic Network Generator</div>
+              <div class="form-row">
+                <label>Network Topology Model</label>
+                <select id="gen-type">
+                  <option value="core_periphery">Core-Periphery (Tier-1 Interbank)</option>
+                  <option value="scale_free">Scale-Free (Barabási–Albert)</option>
+                  <option value="random">Erdős–Rényi Random</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Number of Nodes (N)</label>
+                <input type="number" id="gen-n" value="8" min="3" max="30">
+              </div>
+              <button id="btn-generate-graph" class="btn btn-secondary btn-full">
+                ⚡ Synthesize Network
+              </button>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Global Network Metrics</div>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-label">Institutions</div>
+                  <div class="stat-value text-teal" id="stat-nodes-count">8</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Active Links</div>
+                  <div class="stat-value text-teal" id="stat-edges-count">14</div>
+                </div>
+              </div>
+              <div class="stat-card" style="margin-top: 8px;">
+                <div class="stat-label">Gross Obligation Volume</div>
+                <div class="stat-value amber" id="stat-gross-volume">₹8,400 Cr</div>
+                <div class="stat-sub">Sum of all outstanding interbank gross claims</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 2: MULTILATERAL NETTING ================= -->
+        <div class="tab-panel" id="panel-netting">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Netting Execution</div>
+              <div style="font-size: 11px; color: var(--text-dim); margin-bottom: 12px;">
+                Cancels directed debt cycles (A→B→C→A) using DFS and greedy flow elimination, conserving exact net positions.
+              </div>
+              <div class="btn-group" style="flex-direction: column;">
+                <button id="btn-run-netting" class="btn btn-primary btn-full">
+                  🔄 Run Multilateral Netting
+                </button>
+                <button id="btn-run-bilateral" class="btn btn-secondary btn-full">
+                  ⚖️ Run Bilateral Netting Only
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Compression Performance</div>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-label">Gross Vol (Before)</div>
+                  <div class="stat-value small" id="netting-orig-vol">--</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Gross Vol (After)</div>
+                  <div class="stat-value small green" id="netting-new-vol">--</div>
+                </div>
+              </div>
+              <div class="stats-grid" style="margin-top: 8px;">
+                <div class="stat-card">
+                  <div class="stat-label">Liquidity Savings</div>
+                  <div class="stat-value text-teal" id="netting-savings-pct">--</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Cycles Eliminated</div>
+                  <div class="stat-value amber" id="netting-cycles-count">--</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Algorithm Event Log</div>
+              <div class="step-log" id="netting-step-log">
+                <div class="step-log-entry type-info">Ready to execute cycle elimination.</div>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Net Invariant Verification</div>
+              <table class="data-table" id="net-positions-table">
+                <thead>
+                  <tr>
+                    <th>Bank</th>
+                    <th>Net Balance</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="3" class="text-dim" style="text-align: center;">Run netting to verify invariance</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 3: SETTLEMENT & GRIDLOCK ================= -->
+        <div class="tab-panel" id="panel-settlement">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Sequencing & Gridlock Detection</div>
+              <div style="font-size: 11px; color: var(--text-dim); margin-bottom: 12px;">
+                Kahn's topological sort orders remaining obligations so institutions receive before paying. Tarjan's SCC isolates payment deadlock cycles.
+              </div>
+              <div class="btn-group" style="flex-direction: column;">
+                <button id="btn-run-toposort" class="btn btn-primary btn-full">
+                  ⏱️ Execute Topological Settlement
+                </button>
+                <button id="btn-run-scc" class="btn btn-secondary btn-full">
+                  🔍 Tarjan SCC Gridlock Analysis
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div id="settlement-gridlock-alert" class="alert-box danger" style="display: none;"></div>
+              <div class="panel-title">Sequential Payment Order</div>
+              <ul class="settle-list" id="settlement-order-list">
+                <li style="color: var(--text-mute);">Order will appear here after sort</li>
+              </ul>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Settlement Logs</div>
+              <div class="step-log" id="settlement-step-log">
+                <div class="step-log-entry type-info">Ready to sequence settlement.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 4: LIQUIDITY & FLOW ================= -->
+        <div class="tab-panel" id="panel-liquidity">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Max-Flow / Min-Cut Routing</div>
+              <div class="form-row">
+                <label>Liquidity Source</label>
+                <select id="liquidity-src"></select>
+              </div>
+              <div class="form-row">
+                <label>Liquidity Sink</label>
+                <select id="liquidity-sink"></select>
+              </div>
+              <div class="btn-group" style="flex-direction: column; margin-top: 10px;">
+                <button id="btn-run-maxflow" class="btn btn-primary btn-full">
+                  💧 Compute Edmonds-Karp Max Flow
+                </button>
+                <button id="btn-run-mincut" class="btn btn-danger btn-full">
+                  ✂️ Highlight Min-Cut Bottleneck
+                </button>
+                <button id="btn-run-dijkstra" class="btn btn-secondary btn-full">
+                  🗺️ Shortest Path (Dijkstra)
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Flow Capacities</div>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-label">Max Flow Volume</div>
+                  <div class="stat-value text-teal" id="liquidity-maxflow-val">--</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Min Cut Capacity</div>
+                  <div class="stat-value danger" id="liquidity-mincut-val">--</div>
+                </div>
+              </div>
+              <div class="stat-card" style="margin-top: 8px;">
+                <div class="stat-label">Augmenting Paths Found</div>
+                <div class="stat-value small amber" id="liquidity-bottleneck-val">--</div>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Flow Execution Steps</div>
+              <div class="step-log" id="liquidity-step-log">
+                <div class="step-log-entry type-info">Select source & sink institutions.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 5: CRISIS SIMULATOR ================= -->
+        <div class="tab-panel" id="panel-contagion">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Financial Contagion Engine</div>
+              <div class="crisis-instructions">
+                <div class="pulse-dot"></div>
+                <div>Click any bank on graph or select below to trigger systemic distress.</div>
+              </div>
+              <div class="form-row">
+                <label>Trigger Insolvent Bank</label>
+                <select id="contagion-bank-select"></select>
+              </div>
+              <button id="btn-run-cascade" class="btn btn-danger btn-full">
+                💥 Trigger Default Cascade
+              </button>
+            </div>
+
+            <div class="panel-section">
+              <div id="contagion-result-alert" class="alert-box danger" style="display: none;"></div>
+              <div class="panel-title">Structural Weakness Analysis</div>
+              <div class="btn-group" style="flex-direction: column;">
+                <button id="btn-run-debtrank" class="btn btn-amber btn-full">
+                  📊 Compute DebtRank Centrality
+                </button>
+                <button id="btn-run-articulation" class="btn btn-secondary btn-full">
+                  🎯 Find Single Points of Failure (AP & Bridges)
+                </button>
+                <button id="btn-run-mst" class="btn btn-secondary btn-full">
+                  🌲 Maximum Exposure Spanning Tree (MST)
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">DebtRank Leaderboard</div>
+              <div id="debtrank-leaderboard">
+                <div style="font-size: 11px; color: var(--text-mute); text-align: center; padding: 10px;">
+                  Run DebtRank to evaluate institution risk
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Contagion Cascade Rounds</div>
+              <div class="step-log" id="contagion-step-log">
+                <div class="step-log-entry type-info">Standby for default propagation.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 6: REGULATOR TOOLKIT ================= -->
+        <div class="tab-panel" id="panel-regulator">
+          <div class="panel-scroll">
+            <div class="panel-section">
+              <div class="panel-title">Central Bank Supervision Set</div>
+              <div style="font-size: 11px; color: var(--text-dim); margin-bottom: 12px;">
+                Computes a 2-approximation Vertex Cover to find the minimal set of institutions that touches and monitors every obligation in the system.
+              </div>
+              <button id="btn-run-vertexcover" class="btn btn-primary btn-full">
+                🛡️ Compute Supervision Cover
+              </button>
+              <div id="regulator-vc-result"></div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Regional Clearing Groups (Min k-Cut)</div>
+              <div class="form-row">
+                <div class="slider-wrap">
+                  <label style="margin: 0;">Number of Clusters (k):</label>
+                  <span class="slider-val" id="kcut-val">2</span>
+                </div>
+                <input type="range" id="kcut-slider" min="2" max="5" value="2" style="margin-top: 8px;">
+              </div>
+              <button id="btn-run-kcut" class="btn btn-secondary btn-full" style="margin-top: 8px;">
+                🧩 Partition Network (k-Cut)
+              </button>
+              <div id="regulator-groups-container" style="margin-top: 10px;"></div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-title">Supervision Logs</div>
+              <div class="step-log" id="regulator-step-log">
+                <div class="step-log-entry type-info">Ready to run regulator audits.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div>Jaypee Institute of Information Technology</div>
+      <div>·</div>
+      <div>Fundamentals of Graph Theory Lab <span>(26B16CS320)</span></div>
+      <div>·</div>
+      <div>Shivang Garg · Arpit Jha · Harshit Shukla · Kripansh Upadhyay</div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- JS Modules -->
+  <script src="js/api.js"></script>
+  <script src="js/viz.js"></script>
+  <script src="js/modules/netting.js"></script>
+  <script src="js/modules/settlement.js"></script>
+  <script src="js/modules/liquidity.js"></script>
+  <script src="js/modules/contagion.js"></script>
+  <script src="js/modules/regulator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

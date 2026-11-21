@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    { "id": "SBI",      "capital": 8000, "liquidity": 1800 },
+    { "id": "HDFC",     "capital": 5000, "liquidity": 1200 },
+    { "id": "ICICI",    "capital": 4000, "liquidity": 900  },
+    { "id": "Axis",     "capital": 2000, "liquidity": 500  },
+    { "id": "Kotak",    "capital": 1500, "liquidity": 400  },
+    { "id": "PNB",      "capital": 1000, "liquidity": 200  },
+    { "id": "Yes_Bank", "capital": 400,  "liquidity": 80   },
+    { "id": "Canara",   "capital": 800,  "liquidity": 150  }
+  ],
+  "edges": [
+    { "from": "SBI",      "to": "HDFC",     "weight": 1500 },
+    { "from": "SBI",      "to": "ICICI",    "weight": 1200 },
+    { "from": "SBI",      "to": "PNB",      "weight": 600  },
+    { "from": "HDFC",     "to": "Axis",     "weight": 900  },
+    { "from": "HDFC",     "to": "Kotak",    "weight": 700  },
+    { "from": "HDFC",     "to": "Yes_Bank", "weight": 450  },
+    { "from": "ICICI",    "to": "SBI",      "weight": 500  },
+    { "from": "ICICI",    "to": "PNB",      "weight": 650  },
+    { "from": "ICICI",    "to": "Yes_Bank", "weight": 380  },
+    { "from": "Axis",     "to": "ICICI",    "weight": 420  },
+    { "from": "Axis",     "to": "Yes_Bank", "weight": 310  },
+    { "from": "Kotak",    "to": "SBI",      "weight": 350  },
+    { "from": "Kotak",    "to": "Yes_Bank", "weight": 280  },
+    { "from": "PNB",      "to": "Yes_Bank", "weight": 500  },
+    { "from": "Yes_Bank", "to": "Canara",   "weight": 350  },
+    { "from": "Canara",   "to": "PNB",      "weight": 200  }
+  ],
+  "description": "Pre-crisis stressed scenario — elevated interbank obligations, thin capital buffers at smaller banks, heavy concentration of exposure toward Yes_Bank and PNB. Early-warning stress indicators visible."
+}

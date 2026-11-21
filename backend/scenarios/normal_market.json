@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    { "id": "SBI",      "capital": 8000, "liquidity": 3000 },
+    { "id": "HDFC",     "capital": 6000, "liquidity": 2500 },
+    { "id": "ICICI",    "capital": 5500, "liquidity": 2200 },
+    { "id": "Axis",     "capital": 4000, "liquidity": 1500 },
+    { "id": "Kotak",    "capital": 3500, "liquidity": 1200 },
+    { "id": "PNB",      "capital": 3000, "liquidity": 1000 },
+    { "id": "Yes_Bank", "capital": 1500, "liquidity": 500  },
+    { "id": "Canara",   "capital": 2500, "liquidity": 800  }
+  ],
+  "edges": [
+    { "from": "SBI",      "to": "HDFC",     "weight": 800 },
+    { "from": "SBI",      "to": "ICICI",    "weight": 600 },
+    { "from": "HDFC",     "to": "Axis",     "weight": 400 },
+    { "from": "HDFC",     "to": "Kotak",    "weight": 350 },
+    { "from": "ICICI",    "to": "SBI",      "weight": 300 },
+    { "from": "ICICI",    "to": "PNB",      "weight": 250 },
+    { "from": "Axis",     "to": "ICICI",    "weight": 200 },
+    { "from": "Kotak",    "to": "SBI",      "weight": 180 },
+    { "from": "PNB",      "to": "Yes_Bank", "weight": 150 },
+    { "from": "Yes_Bank", "to": "Canara",   "weight": 120 },
+    { "from": "Canara",   "to": "PNB",      "weight": 100 },
+    { "from": "Axis",     "to": "SBI",      "weight": 280 },
+    { "from": "Kotak",    "to": "HDFC",     "weight": 220 },
+    { "from": "PNB",      "to": "ICICI",    "weight": 160 }
+  ],
+  "description": "Normal Indian interbank market — typical settlement day. Multiple cycles for netting demo (SBI↔ICICI, HDFC↔Kotak↔SBI↔HDFC, PNB↔Canara↔PNB↔ICICI…)."
+}

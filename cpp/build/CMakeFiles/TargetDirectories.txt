@@ -1,0 +1,3 @@
+/Users/arpitjha/projects/MNSR/cpp/build/CMakeFiles/mnsr_engine.dir
+/Users/arpitjha/projects/MNSR/cpp/build/CMakeFiles/edit_cache.dir
+/Users/arpitjha/projects/MNSR/cpp/build/CMakeFiles/rebuild_cache.dir

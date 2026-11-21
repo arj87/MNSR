@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    { "id": "SBI",      "capital": 8000, "liquidity": 2000 },
+    { "id": "HDFC",     "capital": 5500, "liquidity": 1500 },
+    { "id": "ICICI",    "capital": 4500, "liquidity": 1100 },
+    { "id": "Axis",     "capital": 2500, "liquidity": 600  },
+    { "id": "Kotak",    "capital": 2000, "liquidity": 500  },
+    { "id": "PNB",      "capital": 1200, "liquidity": 250  },
+    { "id": "Yes_Bank", "capital": 50,   "liquidity": 20   },
+    { "id": "Canara",   "capital": 900,  "liquidity": 180  }
+  ],
+  "edges": [
+    { "from": "SBI",      "to": "HDFC",     "weight": 2000 },
+    { "from": "SBI",      "to": "ICICI",    "weight": 1800 },
+    { "from": "SBI",      "to": "Yes_Bank", "weight": 1200 },
+    { "from": "HDFC",     "to": "Axis",     "weight": 1500 },
+    { "from": "HDFC",     "to": "Yes_Bank", "weight": 1100 },
+    { "from": "HDFC",     "to": "Kotak",    "weight": 900  },
+    { "from": "ICICI",    "to": "SBI",      "weight": 700  },
+    { "from": "ICICI",    "to": "Yes_Bank", "weight": 950  },
+    { "from": "ICICI",    "to": "PNB",      "weight": 850  },
+    { "from": "Axis",     "to": "Yes_Bank", "weight": 600  },
+    { "from": "Axis",     "to": "ICICI",    "weight": 480  },
+    { "from": "Kotak",    "to": "Yes_Bank", "weight": 520  },
+    { "from": "Kotak",    "to": "SBI",      "weight": 300  },
+    { "from": "PNB",      "to": "Yes_Bank", "weight": 750  },
+    { "from": "Yes_Bank", "to": "Canara",   "weight": 400  },
+    { "from": "Canara",   "to": "PNB",      "weight": 220  },
+    { "from": "Yes_Bank", "to": "PNB",      "weight": 180  }
+  ],
+  "description": "Crisis scenario — Lehman-style systemic shock. Yes_Bank is the initial defaulter (capital=50, nearly insolvent). Heavy inbound obligations (SBI, HDFC, ICICI, Axis, Kotak, PNB all exposed). Contagion simulation reveals cascade across the network."
+}
